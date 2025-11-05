@@ -1,4 +1,4 @@
-/* src/index.css - style global simple */
+/* src/index.css (remplace ton fichier existant) */
 :root{
   --bg:#0f1115;
   --panel:#121416;
@@ -18,75 +18,157 @@ body{
   -moz-osx-font-smoothing:grayscale;
 }
 
-/* Container */
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  padding:32px;
-}
+.container{max-width:1100px;margin:0 auto;padding:32px}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--accent)}
 
-/* Header */
-.header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-}
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:700;
-  color:var(--accent);
-}
+.navbtn{background:transparent;border:0;color:var(--muted);padding:8px 10px;border-radius:8px;font-weight:600;cursor:pointer}
+.navbtn.active{color:#fff;background:rgba(255,255,255,0.03)}
 
-/* Hero */
-.hero{
-  display:flex;
-  gap:28px;
-  align-items:center;
-  padding:48px 0;
-}
+.hero{display:flex;gap:28px;align-items:center;padding:48px 0}
 .hero .hero-left{flex:1}
 .hero .hero-right{width:420px}
 
-/* Cards / Projects grid */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
-  gap:16px;
-  margin-top:24px;
-}
+.profile-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
 
-/* Project card */
-.project{
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border:1px solid rgba(255,255,255,0.04);
-  padding:12px;
-  border-radius:12px;
-  transition: transform .18s ease, box-shadow .18s ease;
-  overflow:hidden;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:16px;margin-top:24px}
+.project{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);padding:12px;border-radius:12px;transition: transform .18s ease, box-shadow .18s ease;overflow:hidden}
 .project:hover{ transform: translateY(-6px); box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
 .project .media{ width:100%; height:160px; object-fit:cover; border-radius:8px; background:#000; }
 
-/* Buttons */
-.btn{
-  display:inline-block;
-  padding:8px 12px;
-  border-radius:8px;
-  background:linear-gradient(90deg,var(--accent),#5fb1ff);
-  color:#fff;
-  text-decoration:none;
-  font-weight:600;
-  border:0;
-}
-
-/* small helper */
+.btn{display:inline-block;padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#5fb1ff);color:#fff;text-decoration:none;font-weight:600;border:0}
 .muted{ color:var(--muted); font-size:0.95rem; }
 
-/* Responsive */
-@media (max-width:800px){
-  .hero{flex-direction:column}
-  .hero .hero-right{width:100%}
+.footer{margin-top:48px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.03)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between}
+.footer-links{display:flex;gap:12px;align-items:center}
+.icon-link{display:inline-flex;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted);text-decoration:none}
+
+.timeline{margin-top:12px;display:flex;flex-direction:column;gap:12px}
+.timeline-item{display:flex;gap:16px;align-items:center}
+.timeline-year{min-width:160px;font-weight:700}
+.timeline-detail{color:var(--muted)}
+
+/* Timeline branch center - ajouter au fichier index.css */
+.timeline-section { padding-top: 12px; padding-bottom: 20px; }
+
+.timeline-wrapper {
+  position: relative;
+  margin: 24px 0 8px;
+  /* zone d'affichage de la timeline */
+  display: flex;
+  justify-content: center;
 }
+
+/* container central qui inverse l'ordre des éléments (colonne bottom -> top)
+   : DOM order 0 => bas (plus ancien). column-reverse permet d'avoir visuellement
+   le plus ancien en bas et le plus récent en haut */
+.timeline {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 28px; /* espace vertical entre étapes */
+  padding: 32px 12px;
+}
+
+/* ligne / branche centrale */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 4%;
+  bottom: 4%;
+  width: 4px;
+  background: linear-gradient(180deg, rgba(124,92,255,0.9), rgba(95,177,255,0.9));
+  border-radius: 4px;
+  box-shadow: 0 0 22px rgba(124,92,255,0.08);
+  z-index: 0;
+  opacity: 0.95;
+}
+
+/* chaque item est une ligne horizontale qui contient la carte et le dot au centre */
+.timeline-item {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* centre le "groupe" sur la colonne centrale */
+  position: relative;
+  z-index: 1;
+}
+
+/* inner wrapper pour aligner la carte et le connecteur */
+.timeline-item-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* on limite la largeur de la "ligne" pour que les cartes ne soient pas trop éloignées */
+  max-width: 920px;
+  padding: 0 8px;
+}
+
+/* Side placement:
+   - left : carte à gauche, dot au centre
+   - right: carte à droite, dot au centre */
+.timeline-item.left  { justify-content: flex-start;  }
+.timeline-item.right { justify-content: flex-end;    }
+
+/* la carte contenant le texte */
+.timeline-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 14px 16px;
+  border-radius: 12px;
+  width: calc(50% - 70px); /* laisse de la place pour le centre */
+  max-width: 420px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+/* head row with title and optional date */
+.timeline-card-head { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.timeline-title { font-weight:700; font-size:1.02rem; color: #fff; }
+.timeline-date { font-size:0.85rem; color:var(--muted); }
+
+/* detail text */
+.timeline-detail { margin-top:8px; color:var(--muted); font-size:0.96rem; }
+
+/* connector that sits between card and the central line */
+.timeline-connector {
+  width: 60px; /* espace entre carte et centre */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+
+/* the dot on the central line */
+.timeline-dot {
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background: linear-gradient(180deg,var(--accent),#5fb1ff);
+  box-shadow: 0 4px 12px rgba(92,80,200,0.25), 0 0 0 6px rgba(124,92,255,0.06);
+  border: 2px solid rgba(255,255,255,0.06);
+}
+
+/* small visual tweak so the card appears connected to the dot */
+.timeline-item.left  .timeline-card { margin-right: 8px; }
+.timeline-item.right .timeline-card { margin-left: 8px; }
+
+/* responsive: sur mobile, stack les cartes centrées et cache la branche alternée */
+@media (max-width: 760px) {
+  .timeline::before { left: 12px; transform: none; width:3px; } /* branche à gauche */
+  .timeline {
+    padding-left: 40px;
+    gap: 18px;
+  }
+  .timeline-item { justify-content: flex-start; } /* tout aligné à gauche */
+  .timeline-item-inner { gap: 12px; }
+  .timeline-card { width: calc(100% - 80px); max-width: 100%; }
+  .timeline-connector { width: 36px; }
+}
+
+
+@media (max-width:800px){.hero{flex-direction:column}.hero .hero-right{width:100%}}

@@ -1,41 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import testImg from './assets/images/testImg.jpg'
+// src/App.tsx
+import { useEffect, useState } from 'react'
+import './index.css'
+
+import Header from './components/Header'
+import Footer from './components/Footer'
+
+import Home from './pages/Home'
+import Projects from './pages/Projects'
+import Timeline from './pages/Timeline'
 
 export default function App(){
+  const [page, setPage] = useState<'home'|'projects'|'timeline'>('home')
+
+  // Keyboard shortcuts: 1 = home, 2 = projects, 3 = timeline
+  useEffect(() => {
+    function onKey(e: KeyboardEvent){
+      if (e.target && (e.target as HTMLElement).tagName === 'INPUT') return
+      if (e.key === '1') setPage('home')
+      if (e.key === '2') setPage('projects')
+      if (e.key === '3') setPage('timeline')
+      // navigation rapide: left/right arrows
+      if (e.key === 'ArrowRight') {
+        setPage(p => p === 'home' ? 'projects' : p === 'projects' ? 'timeline' : 'home')
+      }
+      if (e.key === 'ArrowLeft') {
+        setPage(p => p === 'timeline' ? 'projects' : p === 'projects' ? 'home' : 'timeline')
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  useEffect(() => {
+    document.title = page === 'home' ? 'Simon — Accueil' : page === 'projects' ? 'Simon — Projets' : 'Simon — Parcours'
+  }, [page])
+
   return (
     <div className="container">
-      <header className="header">
-        <div className="logo">Simon — Game Dev</div>
-        <nav className="muted">Portfolio • Projets • Contact</nav>
-      </header>
+      <Header page={page} setPage={p => setPage(p)} />
 
-      <section className="hero">
-        <div className="hero-left">
-          <h1>Salut — je suis Simon, développeur de jeux</h1>
-          <p className="muted">BTS SIO (2 ans) → Bachelor Gaming Campus (2 ans). Je crée des prototypes et des jeux publiés sur Itch.io.</p>
-          <a className="btn" href="#projects">Voir mes projets</a>
-        </div>
-        <div className="hero-right">
-          <img src={testImg} alt="mini" style={{width:'100%', borderRadius:12}}/>
-        </div>
-      </section>
+      {page === 'home' && <Home />}
+      {page === 'projects' && <Projects />}
+      {page === 'timeline' && <Timeline />}
 
-      <section id="projects">
-        <h2>Projets</h2>
-        <div className="grid">
-          <ProjectCard
-            title="Nom du Jeu"
-            role="Gameplay / Programmation"
-            desc="Prototype de plateforme avec mécanique X. Ce projet m'a appris Y et amélioré Z."
-            itchUrl="https://itch.io"
-            poster={testImg}
-          />
-          {/* Duplique les ProjectCard pour d'autres projets */}
-        </div>
-      </section>
+      <Footer />
     </div>
   )
 }
