@@ -11,7 +11,7 @@ export default function Home(){
       <div className="hero-right">
         <div className="profile-card">
           <img src="/images/imgTest.png" alt="Simon portrait" style={{width:'100%', borderRadius:12}}/>
-          <h4 style={{marginTop:12}}>Simon — Game Dev</h4>
+          <h4 style={{marginTop:12}}>Simon - Game Dev</h4>
           <p className="muted">Développeur • Prototypes </p>
         </div>
       </div>

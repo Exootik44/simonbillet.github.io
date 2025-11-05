@@ -19,8 +19,6 @@ export default function App(){
       if (e.key === '1') setPage('home')
       if (e.key === '2') setPage('projects')
       if (e.key === '3') setPage('timeline')
-
-        
       // navigation rapide: left/right arrows
       if (e.key === 'ArrowRight') {
         setPage(p => p === 'home' ? 'projects' : p === 'projects' ? 'timeline' : 'home')

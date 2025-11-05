@@ -44,36 +44,27 @@ body{
 .footer-links{display:flex;gap:12px;align-items:center}
 .icon-link{display:inline-flex;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted);text-decoration:none}
 
-.timeline{margin-top:12px;display:flex;flex-direction:column;gap:12px}
-.timeline-item{display:flex;gap:16px;align-items:center}
-.timeline-year{min-width:160px;font-weight:700}
-.timeline-detail{color:var(--muted)}
-
-/* Timeline branch center - ajouter au fichier index.css */
+/* Timeline branch center - ajouter/mettre à jour dans src/index.css */
 .timeline-section { padding-top: 12px; padding-bottom: 20px; }
 
 .timeline-wrapper {
   position: relative;
   margin: 24px 0 8px;
-  /* zone d'affichage de la timeline */
   display: flex;
   justify-content: center;
 }
 
-/* container central qui inverse l'ordre des éléments (colonne bottom -> top)
-   : DOM order 0 => bas (plus ancien). column-reverse permet d'avoir visuellement
-   le plus ancien en bas et le plus récent en haut */
 .timeline {
   position: relative;
   width: 100%;
   max-width: 900px;
   display: flex;
-  flex-direction: column-reverse;
-  gap: 28px; /* espace vertical entre étapes */
+  flex-direction: column-reverse; /* garde la logique visuelle : bas = plus ancien */
+  gap: 28px;
   padding: 32px 12px;
 }
 
-/* ligne / branche centrale */
+/* branche / ligne centrale */
 .timeline::before {
   content: "";
   position: absolute;
@@ -84,66 +75,60 @@ body{
   width: 4px;
   background: linear-gradient(180deg, rgba(124,92,255,0.9), rgba(95,177,255,0.9));
   border-radius: 4px;
-  box-shadow: 0 0 22px rgba(124,92,255,0.08);
   z-index: 0;
-  opacity: 0.95;
 }
 
-/* chaque item est une ligne horizontale qui contient la carte et le dot au centre */
+/* ligne d'un item (centrée) */
 .timeline-item {
   width: 100%;
   display: flex;
-  justify-content: center; /* centre le "groupe" sur la colonne centrale */
+  justify-content: center;
   position: relative;
   z-index: 1;
 }
 
-/* inner wrapper pour aligner la carte et le connecteur */
+/* wrapper interne alignant la carte et le connecteur */
 .timeline-item-inner {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 12px;
-  /* on limite la largeur de la "ligne" pour que les cartes ne soient pas trop éloignées */
   max-width: 920px;
   padding: 0 8px;
 }
 
-/* Side placement:
-   - left : carte à gauche, dot au centre
-   - right: carte à droite, dot au centre */
-.timeline-item.left  { justify-content: flex-start;  }
-.timeline-item.right { justify-content: flex-end;    }
+/* meilleure spécificité pour éviter override par d'autres règles */
+.timeline .timeline-item.left  { justify-content: flex-start;  }
+.timeline .timeline-item.right { justify-content: flex-end;    }
 
-/* la carte contenant le texte */
+/* carte */
 .timeline-card {
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   border: 1px solid rgba(255,255,255,0.04);
   padding: 14px 16px;
   border-radius: 12px;
-  width: calc(50% - 70px); /* laisse de la place pour le centre */
+  width: calc(50% - 70px);
   max-width: 420px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.45);
 }
 
-/* head row with title and optional date */
+/* en-tête carte */
 .timeline-card-head { display:flex; justify-content:space-between; align-items:center; gap:8px; }
 .timeline-title { font-weight:700; font-size:1.02rem; color: #fff; }
+.timeline-role { font-size:0.9rem; color:var(--muted); }
 .timeline-date { font-size:0.85rem; color:var(--muted); }
 
-/* detail text */
+/* détail */
 .timeline-detail { margin-top:8px; color:var(--muted); font-size:0.96rem; }
 
-/* connector that sits between card and the central line */
+/* connecteur & dot */
 .timeline-connector {
-  width: 60px; /* espace entre carte et centre */
+  width: 60px;
   display:flex;
   align-items:center;
   justify-content:center;
   pointer-events:none;
 }
-
-/* the dot on the central line */
 .timeline-dot {
   width:14px;
   height:14px;
@@ -153,22 +138,23 @@ body{
   border: 2px solid rgba(255,255,255,0.06);
 }
 
-/* small visual tweak so the card appears connected to the dot */
+/* connexion visuelle entre carte et dot */
 .timeline-item.left  .timeline-card { margin-right: 8px; }
 .timeline-item.right .timeline-card { margin-left: 8px; }
 
-/* responsive: sur mobile, stack les cartes centrées et cache la branche alternée */
+/* responsive (mobile) : on aligne tout à gauche et déplace la branche */
 @media (max-width: 760px) {
-  .timeline::before { left: 12px; transform: none; width:3px; } /* branche à gauche */
+  .timeline::before { left: 12px; transform: none; width:3px; }
   .timeline {
     padding-left: 40px;
     gap: 18px;
   }
-  .timeline-item { justify-content: flex-start; } /* tout aligné à gauche */
+  .timeline-item { justify-content: flex-start; }
   .timeline-item-inner { gap: 12px; }
   .timeline-card { width: calc(100% - 80px); max-width: 100%; }
   .timeline-connector { width: 36px; }
 }
+
 
 
 @media (max-width:800px){.hero{flex-direction:column}.hero .hero-right{width:100%}}
