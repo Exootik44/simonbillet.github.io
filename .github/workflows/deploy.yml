@@ -5,6 +5,11 @@ on:
     branches:
       - main    # change si ta branche principale s'appelle 'master' ou autre
 
+permissions:
+  contents: write   # permet de push/pull le contenu (git)
+  pages: write      # permis pour Pages (publish)
+  id-token: write   # parfois nécessaire pour OIDC (ok à laisser)
+  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
