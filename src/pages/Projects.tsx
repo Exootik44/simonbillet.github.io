@@ -9,6 +9,8 @@ type Project = {
   itchUrl?: string
   poster?: string
   videoUrl?: string | undefined
+  date?: string
+  duree?: string
 }
 
 /**
@@ -22,37 +24,44 @@ const PROJECTS: Project[] = [
     title: 'Zombie FPS',
     role: 'Unity • Programmation',
     desc: "FPS créé sur Unity : système de vagues, plusieurs armes, IA basique.",
-    itchUrl: 'https://billetsimon.itch.io/zombiefps',
+    itchUrl: undefined,
     poster: '/images/imgTest.png',
-    //poster: testImg,
-    videoUrl: undefined                    // ou '/assets/videos/zombiefps.mp4'
+    videoUrl: '/assets/videos/tiny-rts-preview.mp4',
+    date: 'Octobre 2025',
+    duree: '1 semaine'
   },
   {
     id: 'pokemon-like',
     title: 'Pokemon-like',
     role: 'C# • Console • Programmation',
     desc: "Pokemon-like",
-    itchUrl: '/images/imgTest.png',
-    poster: '/assets/images/imgTestPokemon.jpg',
-    videoUrl: undefined
+    itchUrl: 'https://billetsimon.itch.io/zombiefps',
+    poster: '/images/imgTestPokemon.jpg',
+    videoUrl: undefined,
+    date: 'Septembre 2025',
+    duree: '1 semaine'
   },
   {
     id: 'rugby-ia',
     title: 'Rugby IA',
     role: 'C++ • IA • State machine',
     desc: "Jeu de rugby qui se joue sans touche humaine ( a reformuler mdrr )",
-    itchUrl: undefined,
+    itchUrl: 'https://billetsimon.itch.io/zombiefps',
     poster: '/assets/images/tiny-rts.jpg',
-    videoUrl: '/assets/videos/tiny-rts-preview.mp4' // si tu veux une courte vidéo
+    videoUrl: '/assets/videos/tiny-rts-preview.mp4',
+    date: 'Novembre 2024',
+    duree: '1 semaine'
   },
   {
     id: 'rugby-ia',
     title: 'Rugby IA',
     role: 'C++ • IA • State machine',
     desc: "Jeu de rugby qui se joue sans touche humaine ( a reformuler mdrr )",
-    itchUrl: undefined,
+    itchUrl: 'https://billetsimon.itch.io/zombiefps',
     poster: '/assets/images/tiny-rts.jpg',
-    videoUrl: '/assets/videos/tiny-rts-preview.mp4' // si tu veux une courte vidéo
+    videoUrl: '/assets/videos/tiny-rts-preview.mp4',
+    date: 'Octobre 2025',
+    duree: '1 semaine'
   }
   // <-- Ajoute d'autres objets projet ici
 ]
@@ -74,6 +83,8 @@ export default function Projects() {
             itchUrl={p.itchUrl}
             poster={p.poster}
             videoUrl={p.videoUrl}
+            date={p.date}
+            duree={p.duree}
           />
         ))}
       </div>

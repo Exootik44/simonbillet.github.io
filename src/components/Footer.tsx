@@ -7,7 +7,7 @@ export default function Footer(){
   return (
     <footer className="footer">
       <div className="footer-inner container">
-        <div className="footer-left muted">© {new Date().getFullYear()} Simon — Game Dev</div>
+        <div className="footer-left muted">© {new Date().getFullYear()} Simon Game Dev</div>
         <div className="footer-links">
           <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="icon-link">
             {/* LinkedIn SVG */}

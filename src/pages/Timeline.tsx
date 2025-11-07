@@ -15,11 +15,47 @@ type Item = {
  * Le rendu visuel place le plus ancien en bas et le plus récent en haut.
  */
 const ITEMS: Item[] = [
-  { id: 'bac', title: 'Baccalauréat', role: 'Général - Maths / Éco / NSI', desc: 'Baccalauréat général, options Maths, Économie et NSI', date: '2018 - 2021' },
-  { id: 'fac', title: "Fac d'économie", role: 'Licence (6 mois)', desc: "Début d'études supérieures en économie (6 mois)", date: '2021 - 2022' },
-  { id: 'bts', title: 'BTS SIO', role: 'Développement & Réseaux', desc: 'Formation technique en systèmes informatiques et réseaux', date: '2022 - 2024' },
-  { id: 'gaming', title: 'Bachelor — Gaming Campus', role: 'Game dev / Design', desc: 'Bachelor orienté jeux vidéo et production', date: '2024 - 2026' }
-  // Ajoute/édite ici (toujours du plus ancien au plus récent)
+  { id: 'naissance', 
+    title: 'Naissance', 
+    role: 'Vivre - Respirer - Pleurer', 
+    desc: 'Premier chapitre, premières curiosités', 
+    date: '2003 - 2003' 
+  },
+  { id: 'enfance', 
+    title: 'Enfance', 
+    role: 'Courir - Decouvrir - Jouer', 
+    desc: 'Enfance heureuse à la campagne avec mes frères', 
+    date: '2003 - 2014' 
+  },
+  { id: 'college', 
+    title: 'Collège', 
+    role: 'Castor Informatique - Amitiés', 
+    desc: "Petit établissement de campagne, découverte du concours castor informatique et création d'amitiés solides ", 
+    date: '2014 - 2018' 
+  },
+  { id: 'bac', 
+    title: 'Baccalauréat', 
+    role: 'Général - Maths / Éco / NSI', 
+    desc: "Des sciences et de l'informatique dans un lycée en ville", 
+    date: '2018 - 2021' 
+  },
+  { id: 'fac', 
+    title: "Fac d'économie", 
+    role: 'Economie - Développement personnel', 
+    desc: "Expérience utile pour apprendre a me connaître, réorientation assumée", 
+    date: '2021 - 2022' 
+  },
+  { id: 'bts', 
+    title: 'BTS SIO', 
+    role: 'Base solides en dev full stack',
+    desc: 'Formation technique en systèmes informatiques et réseaux', 
+    date: '2022 - 2024' 
+  },
+  { id: 'gaming', 
+    title: 'Bachelor dev jeux vidéo', 
+    role: "dev gameplay - gestion de projet - travail d'équipe", 
+    desc: 'Bachelor orienté jeux vidéo, pédagogie par projets', 
+    date: '2024 - 2026' }
 ]
 
 export default function Timeline(){

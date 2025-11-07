@@ -1,12 +1,29 @@
-/* src/index.css (remplace ton fichier existant) */
+/* ============================================================
+   src/index.css (mise à jour)
+   - Unifie placement graphique de .project .meta et .timeline-date
+   - timeline-date positionnée en bas à droite (comme .project .meta)
+   - Mobile: les deux deviennent statiques/empilés
+   ============================================================ */
+
+/* -------------------- TOKENS / VARIABLES -------------------- */
 :root{
   --bg:#0f1115;
   --panel:#121416;
   --accent:#7c5cff;
   --muted:#9aa4b2;
   --glass: rgba(255,255,255,0.04);
+
+  /* design tokens additionnels */
+  --card-radius: 12px;
+  --card-padding: 14px 16px;
+  --card-gap: 8px;
+  --title-size: 1.04rem;
+  --role-size: 0.92rem;
+  --desc-size: 0.96rem;
+  --meta-size: 0.85rem;
 }
 
+/* -------------------- RESET & BASE -------------------- */
 *{box-sizing:border-box}
 html,body,#root{height:100%}
 body{
@@ -18,6 +35,7 @@ body{
   -moz-osx-font-smoothing:grayscale;
 }
 
+/* -------------------- LAYOUT / HEADER / HERO -------------------- */
 .container{max-width:1100px;margin:0 auto;padding:32px}
 .header{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--accent)}
@@ -31,6 +49,7 @@ body{
 
 .profile-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
 
+/* -------------------- GRID / PROJECTS BASE -------------------- */
 .grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:16px;margin-top:24px}
 .project{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);padding:12px;border-radius:12px;transition: transform .18s ease, box-shadow .18s ease;overflow:hidden}
 .project:hover{ transform: translateY(-6px); box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
@@ -44,7 +63,47 @@ body{
 .footer-links{display:flex;gap:12px;align-items:center}
 .icon-link{display:inline-flex;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted);text-decoration:none}
 
-/* Timeline branch center - ajouter/mettre à jour dans src/index.css */
+/* -------------------- PROJECT: meta placement (absolute) -------------------- */
+/* remplace/complète ta règle .project existante */
+.project {
+  position: relative;                         /* nécessaire pour placer la meta en absolute */
+  padding: 12px;
+  padding-bottom: 56px;                       /* espace réservé en bas pour la meta (date/durée) */
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 12px;
+  transition: transform .18s ease, box-shadow .18s ease;
+  overflow: hidden;
+}
+
+/* la meta (date + durée) en bas à droite — style unifié */
+.project .meta {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  font-size: var(--meta-size);
+  line-height: 1;
+  color: var(--muted);
+  white-space: nowrap;         /* évite le wrap si court */
+  pointer-events: none;        /* empêche la meta d'interférer avec les boutons */
+}
+
+/* responsive : sur très petits écrans on empile la meta sous le contenu */
+@media (max-width: 420px) {
+  .project {
+    padding-bottom: 16px;      /* moins d'espace nécessaire si la meta devient inline */
+  }
+  .project .meta {
+    position: static;
+    display: block;
+    margin-top: 8px;
+    text-align: right;
+    pointer-events: auto;
+    white-space: normal;
+  }
+}
+
+/* -------------------- TIMELINE -------------------- */
 .timeline-section { padding-top: 12px; padding-bottom: 20px; }
 
 .timeline-wrapper {
@@ -106,20 +165,22 @@ body{
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   border: 1px solid rgba(255,255,255,0.04);
   padding: 14px 16px;
+  padding-bottom: 56px; /* réserve la même zone que .project pour la date */
   border-radius: 12px;
   width: calc(50% - 70px);
   max-width: 420px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  position: relative; /* important: positionner la date relative à la carte */
 }
 
 /* en-tête carte */
 .timeline-card-head { display:flex; justify-content:space-between; align-items:center; gap:8px; }
 .timeline-title { font-weight:700; font-size:1.02rem; color: #fff; }
 .timeline-role { font-size:0.9rem; color:var(--muted); }
-.timeline-date { font-size:0.85rem; color:var(--muted); }
 
+/* NOTE: timeline-date sera positionnée en bas à droite (hors head) pour matcher .project .meta */
 /* détail */
-.timeline-detail { margin-top:8px; color:var(--muted); font-size:0.96rem; }
+.timeline-detail { margin-top:8px; font-size:0.96rem; } 
 
 /* connecteur & dot */
 .timeline-connector {
@@ -136,13 +197,73 @@ body{
   background: linear-gradient(180deg,var(--accent),#5fb1ff);
   box-shadow: 0 4px 12px rgba(92,80,200,0.25), 0 0 0 6px rgba(124,92,255,0.06);
   border: 2px solid rgba(255,255,255,0.06);
+  position: relative;
+  z-index: 3; /* s'assurer qu'il soit au dessus de la branche centrale */
 }
 
-/* connexion visuelle entre carte et dot */
-.timeline-item.left  .timeline-card { margin-right: 8px; }
-.timeline-item.right .timeline-card { margin-left: 8px; }
+.timeline-item.left  .timeline-card      { order: 1; margin-right: 8px;  }
+.timeline-item.left  .timeline-connector { order: 2; }
 
-/* responsive (mobile) : on aligne tout à gauche et déplace la branche */
+.timeline-item.right .timeline-card      { order: 2; margin-left: 8px;   }
+.timeline-item.right .timeline-connector { order: 1; }
+
+/* ré-assurance des alignements */
+.timeline .timeline-item.left  .timeline-item-inner { justify-content: flex-start; }
+.timeline .timeline-item.right .timeline-item-inner { justify-content: flex-end; }
+
+/* -------------------- TYPOGRAPHIE / COMMUN TIMELINE & PROJECT -------------------- */
+/* Ces règles s'appliquent aux deux composants (timeline & project)
+   pour garder une cohérence visuelle tout en restant modifiables séparément */
+
+/* title */
+.timeline-title,
+.project h3 {
+  margin: 0;
+  font-weight: 700;
+  font-size: var(--title-size);
+  color: #fff;
+  line-height: 1.15;
+}
+
+/* role / sous-titre */
+.timeline-role,
+.project .muted {
+  margin-top: 4px;
+  font-size: var(--role-size);
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* description / détail */
+.timeline-detail,
+.project p {
+  margin-top: 8px;
+  font-size: var(--desc-size);
+  color: #e6eef8;
+  line-height: 1.4;
+  opacity: 0.95;
+}
+
+/* date / meta (petit texte utilitaire)
+   On unifie l'apparence de .project .meta et .timeline-date ici. */
+.timeline-date,
+.project .meta {
+  font-size: var(--meta-size);
+  color: var(--muted);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* place la timeline-date en bas à droite de la timeline-card
+   (même pattern que .project .meta) */
+.timeline-card .timeline-date {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  pointer-events: none;
+}
+
+/* -------------------- RESPONSIVE (mobile) -------------------- */
 @media (max-width: 760px) {
   .timeline::before { left: 12px; transform: none; width:3px; }
   .timeline {
@@ -151,10 +272,26 @@ body{
   }
   .timeline-item { justify-content: flex-start; }
   .timeline-item-inner { gap: 12px; }
-  .timeline-card { width: calc(100% - 80px); max-width: 100%; }
-  .timeline-connector { width: 36px; }
+
+  /* On veut le connector à gauche puis la carte (order) */
+  .timeline-connector { order: 0; width: 36px; }
+  .timeline-card { order: 1; width: calc(100% - 80px); max-width: 100%; padding-bottom: 16px; }
+  .timeline-item .timeline-card { margin: 0 0 0 8px; }
+
+  /* Make timeline-date behave like project meta on mobile: become inline/static */
+  .timeline-card .timeline-date {
+    position: static;
+    display: block;
+    margin-top: 8px;
+    text-align: right;
+    white-space: normal;
+    pointer-events: auto;
+  }
+
+  /* Projects: adapt width + meta placement */
+  .project { width: calc(100% - 80px); max-width: 100%; padding-bottom: 16px; }
+  .project .meta { position: static; display: block; margin-top: 8px; text-align: right; white-space: normal; pointer-events: auto; }
 }
 
-
-
+/* petit tweak pour hero sur petits écrans */
 @media (max-width:800px){.hero{flex-direction:column}.hero .hero-right{width:100%}}
